@@ -7,7 +7,7 @@
         <div style="display: flex; flex-direction: column; align-items: center; gap: 20px">
             <h:outputText id="clock" style="font-size: 60px" value="#{indexView.currentTime}"/>
             <p:poll interval="12" listener="#{indexView.updateTime()}" update="clock"/>
-            <p:link outcome="/main" value="MAIN"/>
+            <p:link outcome="/main" value="Main page"/>
         </div>
     </ui:define>
 </ui:composition>

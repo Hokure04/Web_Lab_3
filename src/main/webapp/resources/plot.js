@@ -6,7 +6,7 @@ const ctx = canvas.getContext('2d')
 canvas.addEventListener('click', async (e) => {
     const r = getShotR()
     if (!r) {
-        shoot([{name: 'error', value: 'R is unset.'}])
+        shoot([{name: 'error', value: 'Значение R не установлено'}])
         return
     }
     const x = (r * (e.offsetX - canvas.width / 2) / R / scale).toFixed(4)
@@ -38,7 +38,7 @@ function drawPoint(x, y, r, inArea) {
     y = -y * scale / (r / R) + canvas.width / 2
     ctx.beginPath()
     ctx.arc(x, y, 3, 0, 2 * Math.PI, false)
-    ctx.fillStyle = inArea ? "yellow" : "grey"
+    ctx.fillStyle = inArea ? "green" : "red"
     ctx.fill()
 }
 
@@ -54,19 +54,19 @@ function drawPlot() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     // rectangle
-    ctx.fillRect(transformX(0), transformY(R / 2), R * scale, (R / 2) * scale)
+    ctx.fillRect(transformX(0), transformY(R), -R/2 * scale, (R) * scale)
 
     // triangle
     ctx.beginPath()
-    ctx.moveTo(transformX(0), transformY(-R / 2))
+    ctx.moveTo(transformX(0), transformY(-R))
     ctx.lineTo(transformX(0), transformY(0))
-    ctx.lineTo(transformX(R / 2), transformY(0))
+    ctx.lineTo(transformX(-R), transformY(0))
     ctx.closePath()
     ctx.fill()
 
     // semicircle
     ctx.beginPath()
-    ctx.arc(transformX(0), transformY(0), R * scale, Math.PI, -Math.PI / 2, false)
+    ctx.arc(transformX(0), transformY(0), R * scale, 2*Math.PI, Math.PI / 2, false)
     ctx.lineTo(transformX(0), transformY(0))
     ctx.closePath()
     ctx.fill()
@@ -113,8 +113,10 @@ function drawPlot() {
     const shotRows = document.querySelectorAll('#shot_table tbody tr')
     shotRows.forEach(row => {
         const cells = row.querySelectorAll('td')
-        if (cells.length !== 4) return
-        const [x, y, r] = cells[1].innerText.trim().slice(1, -1).split(';').map(Number);
-        if (r === shotR) drawPoint(x, y, r, cells[3].innerText === "In");
+        if (cells.length !== 7) return
+        const x = cells[1].innerText.trim()
+        const y = cells[2].innerText.trim()
+        const r = cells[3].innerText.trim()
+        if(r === shotR) drawPoint(x, y, r, cells[6].innerText === "Попадание");
     })
 }

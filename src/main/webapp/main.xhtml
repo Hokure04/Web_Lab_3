@@ -22,18 +22,26 @@
                         <p:outputLabel for="x" value="X:" styleClass="input-label" indicateRequired="false"/>
                         <div class="input-group">
                             <p:inputText id="x" value="#{shotManager.shot.x}" required="true"
-                                         styleClass="text-input" pt:placeholder="from -5.0 to 3.0"
-                                         pt:pattern="(?:-5|\+?3)(?:[.,]0{1,15})?|(?:-[43210]|\+?[012])(?:[.,]\d{1,15})?"
+                                         styleClass="text-input" pt:placeholder="from -5.0 to 5.0"
+                                         pt:pattern="(?:-5|\+?5)(?:[.,]0{1,15})?|(?:-[43210]|\+?[01234])(?:[.,]\d{1,15})?"
                                          converter="XCoordinateConverter"/>
                         </div>
                     </div>
                     <div class="input-block">
                         <p:outputLabel for="y" value="Y:" styleClass="input-label" indicateRequired="false"/>
                         <div class="input-group" style="display: block">
-                            <h:outputText id="y_output" value="#{shotManager.shot.y}"/>
-                            <h:inputHidden id="y" value="#{shotManager.shot.y}" required="true"/>
-                            <p:slider for="y" minValue="-2" maxValue="2" step="0.5"
-                                      display="y_output" displayTemplate="{value}"/>
+                            <h:outputText id="y_output" />
+                            <h:selectOneMenu id="y" value="#{shotManager.shot.y}" required="true">
+                                <f:selectItem itemValue="-4" itemLabel="-4"/>
+                                <f:selectItem itemValue="-3" itemLabel="-3"/>
+                                <f:selectItem itemValue="-2" itemLabel="-2"/>
+                                <f:selectItem itemValue="-1" itemLabel="-1"/>
+                                <f:selectItem itemValue="0" itemLabel="0"/>
+                                <f:selectItem itemValue="1" itemLabel="1"/>
+                                <f:selectItem itemValue="2" itemLabel="2"/>
+                                <f:selectItem itemValue="3" itemLabel="3"/>
+                                <f:selectItem itemValue="4" itemLabel="4"/>
+                            </h:selectOneMenu>
                         </div>
                     </div>
                     <div class="input-block">
@@ -57,25 +65,34 @@
                                      oncomplete="drawPlot()"
                                      update=":shot_table :msgs"/>
                 </h:form>
-                <p:link outcome="/index" value="INDEX" style="margin-top: -20px;"/>
+                <p:link outcome="/index" value="Home page" style="margin-top: -20px;"/>
             </div>
             <div class="table">
-                <p:dataTable id="shot_table" value="#{shotManager.shots}" var="shot" sortMode="single"
+                <p:dataTable id="shot_table" value="#{shotManager.shots}" style="width: 1000px" var="shot" sortMode="single"
                              paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
                              rows="10" rowsPerPageTemplate="5,10,15"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
-                    <p:column headerText="Id" width="50" sortBy="#{shot.id}" sortOrder="desc">
+                    <p:column headerText="Id" width="25" sortBy="#{shot.id}" sortOrder="desc">
                         <h:outputText value="#{shot.id}"/>
                     </p:column>
-                    <p:column headerText="Shot" width="220">
-                        <h:outputText value="(#{shot.x}; #{shot.y}; #{shot.r})"/>
+                    <p:column headerText="X" >
+                        <h:outputText value="#{shot.x}"/>
+                    </p:column>
+                    <p:column headerText="Y" >
+                        <h:outputText value="#{shot.y}"/>
+                    </p:column>
+                    <p:column headerText="R" >
+                        <h:outputText value="#{shot.r}"/>
                     </p:column>
                     <p:column headerText="Time">
                         <h:outputText value="#{shot.shotTime}"/>
                     </p:column>
+                    <p:column headerText="Execution Time">
+                        <h:outputText value="#{shot.executionTime}" />
+                    </p:column>
                     <p:column headerText="Result">
-                        <h:outputText value="#{shot.inArea ? 'In' : 'Out'}"/>
+                        <h:outputText value="#{shot.inArea ? 'Попадание' : 'Промах'}"/>
                     </p:column>
                 </p:dataTable>
             </div>

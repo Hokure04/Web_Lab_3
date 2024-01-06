@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -26,6 +28,8 @@ public class Shot implements Serializable {
     private boolean inArea;
     @Column(nullable = false)
     private String shotTime;
+    @Column(nullable = false)
+    private long executionTime;
 
     public Shot(Shot shot) {
         this.x = shot.x;
@@ -35,14 +39,16 @@ public class Shot implements Serializable {
 
     @PrePersist
     protected void prePersist() {
+        long start = System.nanoTime();
         this.shotTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         this.inArea = checkHit();
+        this.executionTime = System.nanoTime()-start ;
     }
 
     private boolean checkHit() {
-        boolean area1_hit = x >= 0 && y >= 0 && x <= r && y <= r / 2;
-        boolean area2_hit = x >= 0 && y <= 0 && y >= x - r / 2;
-        boolean area3_hit = x <= 0 && y >= 0 && x * x + y * y <= r * r;
-        return area1_hit || area2_hit || area3_hit;
+        boolean area1 = x <= 0 && y >= 0 && x >= -r/2 && y <= r;
+        boolean area2 = x >= 0 && y <= 0 && x*x + y*y  <= r*r;
+        boolean area3 = x <= 0 && y <= 0 && y >= -x - r;
+        return area1 || area2 || area3;
     }
 }

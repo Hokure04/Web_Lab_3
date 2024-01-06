@@ -15,7 +15,7 @@ public class XCoordinateConverter implements Converter<Double> {
     @Override
     public Double getAsObject(FacesContext facesContext, UIComponent uiComponent, String x) {
         if (x == null || x.isEmpty()) return null;
-        if (!Pattern.matches("(?:-5|\\+?3)(?:[.,]0{1,15})?|(?:-[43210]|\\+?[012])(?:[.,]\\d{1,15})?", x))
+        if (!Pattern.matches("(?:-5|\\+?5)(?:[.,]0{1,15})?|(?:-[43210]|\\+?[01234])(?:[.,]\\d{1,15})?", x))
             throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "X: Value doesn't match the pattern.", ""));
         return Double.parseDouble(x.replace(",", "."));
     }

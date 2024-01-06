@@ -22,14 +22,10 @@ public class ShotManager implements Serializable {
     @Getter
     private final List<Shot> shots = new ArrayList<>();
     @Getter
-    private final List<Double> availableR = List.of(1.0, 1.5, 2.0, 2.5, 3.0);
+    private final List<Double> availableR = List.of(1.0, 2.0, 3.0, 4.0, 5.0);
     @Getter @Setter
     private List<Double> selectedR = new ArrayList<>();
 
-    @PostConstruct
-    public void init() {
-        shot.setY(-2.0);
-    }
 
     public void shoot() {
         for (Double r : selectedR) {
