@@ -28,6 +28,7 @@
     border-collapse: collapse;
     padding: 1em;
     width: 330px;
+    background-color: ghostwhite;
 }
 
 .input-block {
@@ -81,4 +82,10 @@
     overflow: hidden;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     box-shadow: var(--block-box-shadow);
+}
+
+.canvas{
+    background-color: ghostwhite;
+    border:solid;
+    border-color: #080808;
 }

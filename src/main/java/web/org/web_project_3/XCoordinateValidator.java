@@ -10,13 +10,13 @@ import jakarta.faces.convert.FacesConverter;
 import java.util.regex.Pattern;
 
 
-@FacesConverter(value = "XCoordinateConverter", managed = true)
-public class XCoordinateConverter implements Converter<Double> {
+@FacesConverter(value = "XCoordinateValidator", managed = true)
+public class XCoordinateValidator implements Converter<Double> {
     @Override
     public Double getAsObject(FacesContext facesContext, UIComponent uiComponent, String x) {
         if (x == null || x.isEmpty()) return null;
         if (!Pattern.matches("(?:-5|\\+?5)(?:[.,]0{1,15})?|(?:-[43210]|\\+?[01234])(?:[.,]\\d{1,15})?", x))
-            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "X: Value doesn't match the pattern.", ""));
+            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "X: Установлено недопустимое значение X.", ""));
         return Double.parseDouble(x.replace(",", "."));
     }
 

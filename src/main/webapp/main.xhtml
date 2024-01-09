@@ -15,23 +15,23 @@
         <div class="main">
             <div class="control">
                 <div class="plot">
-                    <canvas id="plot__canvas" width="300" height="300"/>
+                    <canvas class="canvas" id="plot__canvas" width="300" height="300"/>
                 </div>
                 <h:form id="shot_form">
                     <div class="input-block">
                         <p:outputLabel for="x" value="X:" styleClass="input-label" indicateRequired="false"/>
                         <div class="input-group">
-                            <p:inputText id="x" value="#{shotManager.shot.x}" required="true"
+                            <p:inputText id="x" value="#{pointManager.dot.x}" required="true"
                                          styleClass="text-input" pt:placeholder="from -5.0 to 5.0"
                                          pt:pattern="(?:-5|\+?5)(?:[.,]0{1,15})?|(?:-[43210]|\+?[01234])(?:[.,]\d{1,15})?"
-                                         converter="XCoordinateConverter"/>
+                                         converter="XCoordinateValidator"/>
                         </div>
                     </div>
                     <div class="input-block">
                         <p:outputLabel for="y" value="Y:" styleClass="input-label" indicateRequired="false"/>
                         <div class="input-group" style="display: block">
                             <h:outputText id="y_output" />
-                            <h:selectOneMenu id="y" value="#{shotManager.shot.y}" required="true">
+                            <h:selectOneMenu id="y" value="#{pointManager.dot.y}" required="true">
                                 <f:selectItem itemValue="-4" itemLabel="-4"/>
                                 <f:selectItem itemValue="-3" itemLabel="-3"/>
                                 <f:selectItem itemValue="-2" itemLabel="-2"/>
@@ -47,8 +47,8 @@
                     <div class="input-block">
                         <p:outputLabel for="r" value="R:" styleClass="input-label" indicateRequired="false"/>
                         <div class="input-group">
-                            <p:selectManyCheckbox id="r" value="#{shotManager.selectedR}" flex="true" required="true">
-                                <f:selectItems value="#{shotManager.availableR}" var="r"
+                            <p:selectManyCheckbox id="r" value="#{pointManager.selectedR}" flex="true" required="true">
+                                <f:selectItems value="#{pointManager.availableR}" var="r"
                                                itemLabel="#{r}" itemValue="#{r}"/>
                                 <p:ajax event="change" oncomplete="rChanged()"/>
                             </p:selectManyCheckbox>
@@ -56,43 +56,43 @@
                     </div>
                     <p:commandButton value="Shoot"
                                      styleClass="button"
-                                     actionListener="#{shotManager.shoot()}"
+                                     actionListener="#{pointManager.shoot()}"
                                      oncomplete="drawPlot()"
                                      update=":shot_table :msgs"/>
                     <p:remoteCommand name="shoot"
-                                     actionListener="#{shotManager.shootPlot()}"
+                                     actionListener="#{pointManager.shootPlot()}"
                                      immediate="true"
                                      oncomplete="drawPlot()"
                                      update=":shot_table :msgs"/>
                 </h:form>
-                <p:link outcome="/index" value="Home page" style="margin-top: -20px;"/>
+                <p:link  styleClass="link" outcome="/index" value="Home page" style="margin-top: -20px;"/>
             </div>
             <div class="table">
-                <p:dataTable id="shot_table" value="#{shotManager.shots}" style="width: 1000px" var="shot" sortMode="single"
+                <p:dataTable id="shot_table" value="#{pointManager.dots}" style="width: 1000px" var="dot" sortMode="single"
                              paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
                              rows="10" rowsPerPageTemplate="5,10,15"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
-                    <p:column headerText="Id" width="25" sortBy="#{shot.id}" sortOrder="desc">
-                        <h:outputText value="#{shot.id}"/>
+                    <p:column headerText="Id" width="25" sortBy="#{dot.id}" sortOrder="desc">
+                        <h:outputText value="#{dot.id}"/>
                     </p:column>
                     <p:column headerText="X" >
-                        <h:outputText value="#{shot.x}"/>
+                        <h:outputText value="#{dot.x}"/>
                     </p:column>
                     <p:column headerText="Y" >
-                        <h:outputText value="#{shot.y}"/>
+                        <h:outputText value="#{dot.y}"/>
                     </p:column>
                     <p:column headerText="R" >
-                        <h:outputText value="#{shot.r}"/>
+                        <h:outputText value="#{dot.r}"/>
                     </p:column>
                     <p:column headerText="Time">
-                        <h:outputText value="#{shot.shotTime}"/>
+                        <h:outputText value="#{dot.shotTime}"/>
                     </p:column>
                     <p:column headerText="Execution Time">
-                        <h:outputText value="#{shot.executionTime}" />
+                        <h:outputText value="#{dot.executionTime}" />
                     </p:column>
                     <p:column headerText="Result">
-                        <h:outputText value="#{shot.inArea ? 'Попадание' : 'Промах'}"/>
+                        <h:outputText value="#{dot.inArea ? 'Попадание' : 'Промах'}"/>
                     </p:column>
                 </p:dataTable>
             </div>

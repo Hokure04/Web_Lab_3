@@ -117,6 +117,6 @@ function drawPlot() {
         const x = cells[1].innerText.trim()
         const y = cells[2].innerText.trim()
         const r = cells[3].innerText.trim()
-        if(r === shotR) drawPoint(x, y, r, cells[6].innerText === "Попадание");
+        drawPoint(x, y, r, cells[6].innerText === "Попадание");
     })
 }

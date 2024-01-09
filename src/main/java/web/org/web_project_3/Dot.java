@@ -8,14 +8,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
 @NoArgsConstructor @Getter @ToString
-public class Shot implements Serializable {
+public class Dot implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false) @Setter
@@ -31,10 +29,10 @@ public class Shot implements Serializable {
     @Column(nullable = false)
     private long executionTime;
 
-    public Shot(Shot shot) {
-        this.x = shot.x;
-        this.y = shot.y;
-        this.r = shot.r;
+    public Dot(Dot dot) {
+        this.x = dot.x;
+        this.y = dot.y;
+        this.r = dot.r;
     }
 
     @PrePersist

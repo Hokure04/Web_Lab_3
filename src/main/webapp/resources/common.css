@@ -2,7 +2,7 @@
     --border-radius: 4px;
     --block-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     --block-gap: 40px;
-    --color-primary: #2196f3;
+    --color-primary: #080808;
     --color-error: #cc3333;
 }
 
@@ -13,6 +13,7 @@
 body {
     font-family: sans-serif;
     margin: 20px;
+    background-image: linear-gradient(135deg, #0095B6, slateblue);;
 }
 
 header {
@@ -33,4 +34,10 @@ header {
 
 .ui-growl {
     top: 20px !important;
+}
+
+.link {
+    display: block;
+    border: 5px outset #080808;
+    background-color: white;
 }
